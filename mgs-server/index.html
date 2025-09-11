@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Word Vector + GPT Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    input, textarea { margin: 5px; padding: 5px; width: 300px; }
+    button { margin: 10px; padding: 5px 10px; }
+    #result { margin-top: 20px; font-weight: bold; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <h2>Word Vector Arithmetic + GPT Selector</h2>
+  <p>Enter two words, a Top-k value, and a prompt:</p>
+
+  <input type="text" id="word1" placeholder="word1">
+  <input type="text" id="word2" placeholder="word2"><br>
+  <input type="number" id="topk" placeholder="k" value="5" min="1"><br>
+  <textarea id="prompt" rows="3" placeholder="Enter your instruction for GPT..."></textarea><br>
+  <button onclick="compute()">Compute & Ask GPT</button>
+
+  <div id="result"></div>
+
+  <script>
+    async function compute() {
+      const w1 = document.getElementById("word1").value.trim();
+      const w2 = document.getElementById("word2").value.trim();
+      const k = parseInt(document.getElementById("topk").value) || 1;
+      const prompt = document.getElementById("prompt").value.trim();
+
+      if (!w1 || !w2) {
+        document.getElementById("result").innerText = "Please enter two words.";
+        return;
+      }
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ words: [w1, "-" + w2], topk: k, prompt: prompt })
+        });
+
+        const data = await response.json();
+        if (response.ok && data.candidates) {
+          let output = "Top " + k + " candidates from embedding model:\n";
+          data.candidates.forEach((item, idx) => {
+            output += `${idx+1}. ${item.word} (score: ${item.score.toFixed(3)})\n`;
+          });
+          output += `\nGPT chosen word: ${data.chosen}`;
+          document.getElementById("result").innerText = output;
+        } else if (data.error) {
+          document.getElementById("result").innerText = `Error: ${data.error}`;
+        } else {
+          document.getElementById("result").innerText = "Unexpected response: " + JSON.stringify(data);
+        }
+
+      } catch (err) {
+        document.getElementById("result").innerText = "Request failed: " + err;
+      }
+    }
+  </script>
+</body>
+</html>
