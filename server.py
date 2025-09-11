@@ -69,6 +69,7 @@ def ask():
         full_prompt = f"""
             The word embedding model has suggested these candidate words: {candidate_words}.
             Your task: based on the user prompt below, pick exactly one word from the candidate list.
+            Your choice shouldn't be same to any of the input words: {', '.join(words)}.
             Do not invent new words, only select one from the list.
 
             User prompt: {prompt}
