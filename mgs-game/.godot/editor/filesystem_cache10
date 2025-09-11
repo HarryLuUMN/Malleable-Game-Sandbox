@@ -1,0 +1,5 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1757630717
+icon.svg::CompressedTexture2D/CompressedTexture2D::4407633820574590525::1757602904::1757630403::1::::<><><>0<>0<>9bd66f49d638f2629981fbc8a8fb51e4<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+request_server.gd::GDScript/GDScript::7397774518889999501::1757630187::0::1::::<>Node2D<><>0<>0<><>::
+server_test.tscn::PackedScene/PackedScene::157332247692521866::1757630262::0::1::::<><><>0<>0<><>::uid://ddnsja6egeydh::::res://request_server.gd
