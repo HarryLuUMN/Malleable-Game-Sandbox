@@ -42,12 +42,13 @@
         });
 
         const data = await response.json();
-        if (response.ok && data.candidates) {
-          let output = "Top " + k + " candidates from embedding model:\n";
-          data.candidates.forEach((item, idx) => {
-            output += `${idx+1}. ${item.word} (score: ${item.score.toFixed(3)})\n`;
-          });
-          output += `\nGPT chosen word: ${data.chosen}`;
+        console.log("from server recevied:",data);
+        if (data.candidates) {
+          let output = "Generated Candidates:\n";
+
+          output += `\nGPT chosen word: ${data.chosen.word}\n`;
+          output += `Description: ${data.chosen.description}\n`;
+
           document.getElementById("result").innerText = output;
         } else if (data.error) {
           document.getElementById("result").innerText = `Error: ${data.error}`;
