@@ -1,3 +1,7 @@
+# Intro
+
+A sandbox game that integrates a runtime behavior generation mechanism allowing dynamic mechanism evolutions in real time. 
+
 # Launch Guide
 
 ## How to use the server and the web interface for Malleable Game Sandbox? 
